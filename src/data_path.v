@@ -158,7 +158,7 @@ adder PCplus(
 );
 
 ///////////////////////////////////////////
-ALU ALUv // ARITHMETIC UNIT// mandar paramnetro par tamano de entrada
+ALU ALUv // ARITHMETIC UNIT//
 (  .y(ALUres),//output
 	.a(outmux), 
 	.b(SrcB),
