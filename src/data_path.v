@@ -1,8 +1,8 @@
 module data_path(
 
-//op,funvt
+
 input wire clk_dp, rst, IorD,MemWrite, IRWrite, RegWrite, PCSrc,ALUSrcA,MemtoReg, RegDst, PCene, //selector,
-input wire [1:0] ALUSrcB,//slectro mux 4 to 1
+input wire [1:0] ALUSrcB,//
 input wire [2:0] ALUSControl,
 output [7:0] GPIO_o,
 output [31:0]ALUres
@@ -12,19 +12,19 @@ output [31:0]ALUres
 wire[31:0] Sysmemout, rd1,rd2,adr,SrcA,SrcB,ALUout,outPCin, PCout, InstrOut,DataOut,wd3,regOUT,outreg1,outreg2,outmux;
 wire[31:0] sigextOut,recOut,PCplus4;
 wire[5:0] A3;
-//wire[15:0] sigextIn;
+
 /////////////////////////////////////////////////////////// 
-mux2to1 Adr( //revisar tamano de entrada acutal 32b, pero es parmaetr
+mux2to1 Adr( 
 		
 		.select(IorD),
 		.input_a(PCplus4),
-		//.input_a(PCout), //salida prgram counter
+		//.input_a(PCout), 
 		.input_b(regOUT),
 		.out(adr) // to addres sys mem
 
 );
 
-mux2to1 WD3( //revisar tamano de entrada acutal 32b, pero es parmaetr //16bits
+mux2to1 WD3( 
 		
 		.select(MemtoReg),
 		.input_a(regOUT), 
@@ -33,17 +33,17 @@ mux2to1 WD3( //revisar tamano de entrada acutal 32b, pero es parmaetr //16bits
 
 );
 
-mux2to1 AnALU( //revisar tamano de entrada acutal 32b, pero es parmaetr
+mux2to1 AnALU( 
 		
 		.select(ALUSrcA),
 		.input_a(PCplus4),
-		//.input_a(PCout), //salida programcounter
+		//.input_a(PCout), 
 		.input_b(outreg1),
-		.out(outmux) // to ALU
+		.out(outmux) // 
 
 );
 
-mux2to1 deALU( //revisar tamano de entrada acutal 32b, pero es parmaetr
+mux2to1 deALU( 
 		
 		.select(PCSrc),
 		.input_a(ALUres), //salida ALu
@@ -52,7 +52,7 @@ mux2to1 deALU( //revisar tamano de entrada acutal 32b, pero es parmaetr
 
 );
 
-mux2to1 #( .DW(5)) rtorrd//revisar tamano de entrada acutal 32b, pero es parmaetr
+mux2to1 #( .DW(5)) rtorrd//
 (		
 		.select(RegDst),
 		.input_a(InstrOut[20:16]), //op
@@ -121,7 +121,7 @@ PC PC(
 );
 
 
-/////////////////////////////////// cambiar sin wrapper
+/////////////////////////////////// 
 MemorySys_wrap memsys(
 
 	.white_Enable_i_w(MemWrite),
@@ -133,17 +133,17 @@ MemorySys_wrap memsys(
 
 );
 
-//////////////////////////////////////////////cambiar sin wrapper
+
 
 Reg_wrap RegiterFile(
 
 	.clk(clk_dp), 
-	.reset(1), //checar
+	.reset(1), 
 	.Reg_write_in(RegWrite),
 	.Write_Register_1(A3), 
 	.Read_Register_1(InstrOut[25:21]), 
 	.Read_Register_2(InstrOut[20:16]),
-	.Write_Data(wd3),//revisar 
+	.Write_Data(wd3),
 	.Read_Data_1(rd1), //output
 	.Read_Data_2(rd2)	 //output
 );
@@ -156,12 +156,6 @@ adder PCplus(
 		.b(32'd4),
 		.y(PCplus4)		
 );
-//PC ProgramCounter(
-//		.enable(PCene), 
-//		.clk(clk_dp),
-//		.PCin(outPCin),
-//		.PCout(PCout)
-//);
 
 ///////////////////////////////////////////
 ALU ALUv // ARITHMETIC UNIT// mandar paramnetro par tamano de entrada
