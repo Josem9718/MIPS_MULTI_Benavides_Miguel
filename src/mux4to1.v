@@ -14,10 +14,10 @@ module mux4to1 #(
 always @(*) begin
 
 		case(s)
-			2'b00: out <= I0;
-			2'b01: out <= I1;
-			2'b10: out <= I1;
-			2'b11: out <= I3;
+			2'b00: out = I0;
+			2'b01: out = I1;
+			2'b10: out = I2;
+			2'b11: out = I3;
 		endcase
 	end	
 

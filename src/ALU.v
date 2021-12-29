@@ -8,12 +8,13 @@ module ALU #(
 
 (
 	output reg [WIDTH -1: 0] y,
+	output zero, 
 	input [WIDTH -1: 0] a, b,
 	input [2:0] select,
 	input c_in
 );
 
-//reg zero;
+reg cero;
 
 always @(*) begin
 		
@@ -26,14 +27,15 @@ always @(*) begin
 			4'b100_0: y = $signed(a) < $signed(b) ? 1 : 0;   // SLT
 			4'b101_0: y = a << 1;
 			4'b110_0: y = a >> 1;
-			4'b111_0: y = a - 1'b1;
+			4'b111_0: y = 32'h0;
 			 
 			
-			default:		y = 32'b0;
+			default:		y = 32'h0;
 		endcase
 		
-		//zero = (y == 32'h0) ? 1 : 0;n// revisar
+		cero = (y == 32'h0) ? 1 : 0;// revisar
 	end	
+		assign zero = cero;
 
 endmodule	
 	
